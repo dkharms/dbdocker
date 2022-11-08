@@ -1,0 +1,49 @@
+services:
+  library:
+    image: postgres:14.5
+    ports:
+      - "5432:5432"
+    volumes:
+      - type: bind
+        source: docker/db/scripts/library
+        target: /docker-entrypoint-initdb.d
+      - type: bind
+        source: docker/db/config/library
+        target: /etc/user/pgconfig
+    environment:
+        POSTGRES_DB: POROKHNIN_204
+        POSTGRES_USER: POROKHNIN_204
+        POSTGRES_PASSWORD: POROKHNIN_204
+    command: -c config_file=/etc/user/pgconfig/postgresql.conf
+  trains:
+    image: postgres:14.5
+    ports:
+      - "5433:5432"
+    volumes:
+      - type: bind
+        source: docker/db/scripts/trains
+        target: /docker-entrypoint-initdb.d
+      - type: bind
+        source: docker/db/config/trains
+        target: /etc/user/pgconfig
+    environment:
+        POSTGRES_DB: POROKHNIN_204
+        POSTGRES_USER: POROKHNIN_204
+        POSTGRES_PASSWORD: POROKHNIN_204
+    command: -c config_file=/etc/user/pgconfig/postgresql.conf
+  hospital:
+    image: postgres:14.5
+    ports:
+      - "5434:5432"
+    volumes:
+      - type: bind
+        source: docker/db/scripts/hospital
+        target: /docker-entrypoint-initdb.d
+      - type: bind
+        source: docker/db/config/hospital
+        target: /etc/user/pgconfig
+    environment:
+        POSTGRES_DB: POROKHNIN_204
+        POSTGRES_USER: POROKHNIN_204
+        POSTGRES_PASSWORD: POROKHNIN_204
+    command: -c config_file=/etc/user/pgconfig/postgresql.conf
